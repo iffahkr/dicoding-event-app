@@ -1,14 +1,15 @@
 package com.dicoding.dicodingeventapp.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dicoding.dicodingeventapp.data.response.EventResponse
+import com.bumptech.glide.Glide
+import com.dicoding.dicodingeventapp.data.response.ListEventsItem
 import com.dicoding.dicodingeventapp.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -25,8 +26,8 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        val root: View = binding.root
+        return root
 
     }
 
@@ -34,11 +35,19 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         mainViewModel.upcomingEvent.observe(viewLifecycleOwner) { eventResponse ->
-            setEventData(eventResponse)
+            eventResponse?.listEvents?.let { events ->
+                if (events.isNotEmpty()) {
+                    setEventData(events[0])
+                }
+            }
         }
 
         mainViewModel.finishedEvent.observe(viewLifecycleOwner) { eventResponse ->
-            setEventData(eventResponse)
+            eventResponse?.listEvents?.let { events ->
+                if (events.isNotEmpty()) {
+                    setEventData(events[0])
+                }
+            }
         }
 
         mainViewModel.isLoading.observe(viewLifecycleOwner) {
@@ -66,10 +75,19 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setEventData(eventResponse: EventResponse) {
-        eventResponse.listEvents.let {
-            listEventAdapter.submitList(it)
-        }
+    @SuppressLint("SetTextI18n")
+    private fun setEventData(events: ListEventsItem) {
+        binding.tvMarkUpcoming.text = "Upcoming"
+        binding.tvMarkFinished.text = "Finished"
+        binding.tvHomeNameDesc.text = events.description
+        binding.tvHomeNameFinished.text = events.name
+        binding.tvHomeNameUpcoming.text = events.name
+        Glide.with(this)
+            .load(events.imageLogo)
+            .into(binding.ivHomeUpcoming)
+        Glide.with(this)
+            .load(events.imageLogo)
+            .into(binding.ivHomeFinished)
     }
 
     override fun onDestroyView() {

@@ -32,14 +32,14 @@ class MainViewModel : ViewModel() {
     }
 
     init {
-        findEvent(0)
-        findEvent(1)
+        getUpcomingEvents()
+        getFinishedEvents()
     }
 
 
-    private fun findEvent(active: Int) {
+    private fun getUpcomingEvents() {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getEvents(active)
+        val client = ApiConfig.getApiService().getEvents(active = 1)
         client.enqueue(object : Callback<EventResponse> {
             override fun onResponse(
                 call: Call<EventResponse>,
@@ -47,12 +47,7 @@ class MainViewModel : ViewModel() {
             ) {
                 _isLoading.value = false
                 if (response.isSuccessful) {
-                    response.body()?.let {
-                        when (active) {
-                            1 -> _upcomingEvent.value = it
-                            0 -> _finishedEvent.value = it
-                        }
-                    } ?: Log.e(TAG, "OnFailure: Response body is null")
+                    _upcomingEvent.value = response.body()
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }
@@ -64,4 +59,25 @@ class MainViewModel : ViewModel() {
         })
     }
 
+    private fun getFinishedEvents() {
+        _isLoading.value = true
+        val client = ApiConfig.getApiService().getEvents(active = 0)
+        client.enqueue(object : Callback<EventResponse> {
+            override fun onResponse(
+                call: Call<EventResponse>,
+                response: Response<EventResponse>
+            ) {
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    _finishedEvent.value = response.body()
+                } else {
+                    Log.e(TAG, "onFailure: ${response.message()}")
+                }
+            }
+            override fun onFailure(call: Call<EventResponse>, t: Throwable) {
+                _isLoading.value = false
+                Log.e(TAG, "onFailure: ${t.message}")
+            }
+        })
+    }
 }
