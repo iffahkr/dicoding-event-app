@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">DicodingEventApp</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_upcoming">Upcoming</string>
+    <string name="title_finished">Finished</string>
+    <string name="title_search">Search</string>
+    <string name="event_title">Event Title</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="name">Event Name</string>
+    <string name="summary">Summary</string>
+    <string name="information">Information:</string>
+    <string name="description">Event Description</string>
+    <string name="category">Category</string>
+    <string name="owner_name">Owner Name</string>
+    <string name="city_name">City Name</string>
+    <string name="quota">Quota</string>
+    <string name="registrants">Registrants</string>
+    <string name="begin_time">Begin time</string>
+    <string name="end_time">End Time</string>
+    <string name="button">Register now!</string>
+    <string name="searchbar_hint">Masukkan kata</string>
+    <string name="finished_events">Finished Events</string>
+    <string name="upcoming_events">Upcoming Events</string>
+</resources>
