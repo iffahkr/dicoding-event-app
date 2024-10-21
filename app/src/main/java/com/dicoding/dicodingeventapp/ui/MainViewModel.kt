@@ -34,6 +34,26 @@ class MainViewModel : ViewModel() {
     init {
         getUpcomingEvents()
         getFinishedEvents()
+        getDetailEvent()
+    }
+
+    private fun getDetailEvent() {
+        _isLoading.value = true
+        val client = ApiConfig.getApiService().getDetailEvent("")
+        client.enqueue(object : Callback<DetailEventResponse> {
+            override fun onResponse(
+                call: Call<DetailEventResponse>,
+                response: Response<DetailEventResponse>
+            ) {
+                if (response.isSuccessful) {
+                    _detailEvent.value = response.body()
+                }
+            }
+            override fun onFailure(call: Call<DetailEventResponse>, t: Throwable) {
+                _isLoading.value = false
+                Log.e(TAG, "onFailure: ${t.message}")
+            }
+        })
     }
 
 

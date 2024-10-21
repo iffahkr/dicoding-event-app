@@ -34,7 +34,7 @@ class FinishedFragment : Fragment() {
         mainViewModel.finishedEvent.observe(viewLifecycleOwner) { eventResponse ->
             eventResponse?.listEvents?.let { events ->
                 if (events.isNotEmpty()) {
-                    setEventData(events[0])
+                    listEventAdapter.submitList(events)
                 }
             }
         }

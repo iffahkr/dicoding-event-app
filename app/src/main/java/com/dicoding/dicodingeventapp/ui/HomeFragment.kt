@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,7 +38,7 @@ class HomeFragment : Fragment() {
         mainViewModel.upcomingEvent.observe(viewLifecycleOwner) { eventResponse ->
             eventResponse?.listEvents?.let { events ->
                 if (events.isNotEmpty()) {
-                    setEventData(events[0])
+                    setEventDataUpcoming(events[0])
                 }
             }
         }
@@ -45,7 +46,7 @@ class HomeFragment : Fragment() {
         mainViewModel.finishedEvent.observe(viewLifecycleOwner) { eventResponse ->
             eventResponse?.listEvents?.let { events ->
                 if (events.isNotEmpty()) {
-                    setEventData(events[0])
+                    setEventDataFinished(events[0])
                 }
             }
         }
@@ -56,6 +57,28 @@ class HomeFragment : Fragment() {
 
         setupRecyclerView()
 
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setEventDataUpcoming(events: ListEventsItem) {
+        binding.tvMarkUpcoming.text = "Upcoming Events"
+        binding.tvHomeNameUpcoming.text = events.name
+        Glide.with(this)
+            .load(events.imageLogo)
+            .into(binding.ivHomeUpcoming)
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setEventDataFinished(events: ListEventsItem) {
+        binding.tvMarkFinished.text = "Finished Events"
+        binding.tvHomeNameDesc.text = HtmlCompat.fromHtml(
+            events.description,
+            HtmlCompat.FROM_HTML_MODE_LEGACY
+        )
+        binding.tvHomeNameFinished.text = events.name
+        Glide.with(this)
+            .load(events.imageLogo)
+            .into(binding.ivHomeFinished)
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -73,21 +96,6 @@ class HomeFragment : Fragment() {
             adapter = listEventAdapter
             setHasFixedSize(true)
         }
-    }
-
-    @SuppressLint("SetTextI18n")
-    private fun setEventData(events: ListEventsItem) {
-        binding.tvMarkUpcoming.text = "Upcoming"
-        binding.tvMarkFinished.text = "Finished"
-        binding.tvHomeNameDesc.text = events.description
-        binding.tvHomeNameFinished.text = events.name
-        binding.tvHomeNameUpcoming.text = events.name
-        Glide.with(this)
-            .load(events.imageLogo)
-            .into(binding.ivHomeUpcoming)
-        Glide.with(this)
-            .load(events.imageLogo)
-            .into(binding.ivHomeFinished)
     }
 
     override fun onDestroyView() {

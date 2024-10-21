@@ -1,6 +1,8 @@
 package com.dicoding.dicodingeventapp.data.response
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 data class DetailEventResponse(
 
@@ -14,6 +16,7 @@ data class DetailEventResponse(
 	val event: Event? = null
 )
 
+@Parcelize
 data class Event(
 
 	@field:SerializedName("summary")
@@ -57,4 +60,4 @@ data class Event(
 
 	@field:SerializedName("category")
 	val category: String? = null
-)
+) : Parcelable

@@ -5,12 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.dicoding.dicodingeventapp.data.response.ListEventsItem
 import com.dicoding.dicodingeventapp.databinding.FragmentUpcomingBinding
 
@@ -29,7 +26,6 @@ class UpcomingFragment : Fragment() {
 
         _binding = FragmentUpcomingBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
         return root
     }
 
@@ -39,7 +35,7 @@ class UpcomingFragment : Fragment() {
         mainViewModel.upcomingEvent.observe(viewLifecycleOwner) { eventResponse ->
             eventResponse?.listEvents?.let { events ->
                 if (events.isNotEmpty()) {
-                    setEventData(events[0])
+                    listEventAdapter.submitList(events)
                 }
             }
         }
