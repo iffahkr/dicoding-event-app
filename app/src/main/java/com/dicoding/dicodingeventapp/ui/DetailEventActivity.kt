@@ -12,7 +12,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.dicoding.dicodingeventapp.R
-import com.dicoding.dicodingeventapp.data.response.Event
 import com.dicoding.dicodingeventapp.data.response.ListEventsItem
 import com.dicoding.dicodingeventapp.databinding.ActivityDetailEventBinding
 
@@ -20,7 +19,6 @@ import com.dicoding.dicodingeventapp.databinding.ActivityDetailEventBinding
 class DetailEventActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityDetailEventBinding
-    private lateinit var detailAdapter: DetailAdapter
 
     companion object {
         const val KEY_EVENT = "key_event"
@@ -41,24 +39,6 @@ class DetailEventActivity : AppCompatActivity(), View.OnClickListener {
         if (event != null) {
             displayDetail(event)
         }
-
-//        mainViewModel.detailEvent.observe(this) { eventDetail ->
-//            eventDetail?.event?.let {
-//                binding.tvDetailName.text = event?.name
-//                binding.tvDetailSummary.text = event?.summary
-//                binding.tvDetailQuota.text = event?.quota.toString()
-//                binding.tvDetailStartTime.text = event?.beginTime
-//                binding.tvOwnerName.text = event?.ownerName
-//                binding.tvInfo.text = "Information: "
-//                binding.tvDetailDescription.text = HtmlCompat.fromHtml(
-//                    event?.description.toString(),
-//                    HtmlCompat.FROM_HTML_MODE_LEGACY
-//                )
-//                Glide.with(this)
-//                    .load(event?.imageLogo)
-//                    .into(binding.ivDetailLogo)
-//            }
-//        }
 
         binding.btnRegister.setOnClickListener(this)
 

@@ -1,6 +1,5 @@
 package com.dicoding.dicodingeventapp.ui
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dicoding.dicodingeventapp.data.response.ListEventsItem
 import com.dicoding.dicodingeventapp.databinding.FragmentUpcomingBinding
 
 class UpcomingFragment : Fragment() {
@@ -62,12 +60,6 @@ class UpcomingFragment : Fragment() {
             adapter = listEventAdapter
             setHasFixedSize(true)
         }
-    }
-
-
-    @SuppressLint("SetTextI18n")
-    private fun setEventData(events: ListEventsItem) {
-        //
     }
 
 
