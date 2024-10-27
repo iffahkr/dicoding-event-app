@@ -17,7 +17,7 @@
             android:name=".ui.DetailEventActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.HomeFragment"
+            android:name=".ui.home.HomeFragment"
             android:exported="false"
             android:label="@string/title_activity_home" />
         <activity

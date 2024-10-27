@@ -42,13 +42,14 @@ class DetailEventActivity : AppCompatActivity(), View.OnClickListener {
 
         binding.btnRegister.setOnClickListener(this)
 
+
     }
 
     @SuppressLint("SetTextI18n")
     private fun displayDetail(event: ListEventsItem) {
         binding.tvDetailName.text = event.name
         binding.tvDetailSummary.text = event.summary
-        binding.tvDetailQuota.text = event.quota.toString()
+        binding.tvDetailQuota.text = quotaEvent(event).toString()
         binding.tvDetailStartTime.text = event.beginTime
         binding.tvOwnerName.text = event.ownerName
         binding.tvInfo.text = "Information: "
@@ -60,6 +61,8 @@ class DetailEventActivity : AppCompatActivity(), View.OnClickListener {
             .load(event.imageLogo)
             .into(binding.ivDetailLogo)
     }
+
+    private fun quotaEvent(event: ListEventsItem) = event.quota - event.registrants
 
     override fun onClick(v: View?) {
         when (v?.id) {

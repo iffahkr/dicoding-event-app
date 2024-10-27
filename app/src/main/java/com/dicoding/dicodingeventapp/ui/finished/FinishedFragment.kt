@@ -1,20 +1,22 @@
-package com.dicoding.dicodingeventapp.ui
+package com.dicoding.dicodingeventapp.ui.finished
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.dicodingeventapp.databinding.FragmentFinishedBinding
+import com.dicoding.dicodingeventapp.ui.DetailEventActivity
 
 class FinishedFragment : Fragment() {
 
     private var _binding: FragmentFinishedBinding? = null
     private val binding get() = _binding!!
-    private val mainViewModel by viewModels<MainViewModel>()
-    private lateinit var listEventAdapter: ListEventAdapter
+    private lateinit var finishedAdapter: FinishedAdapter
+    private lateinit var finishedViewModel: FinishedViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,19 +32,30 @@ class FinishedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mainViewModel.finishedEvent.observe(viewLifecycleOwner) { eventResponse ->
-            eventResponse?.listEvents?.let { events ->
-                if (events.isNotEmpty()) {
-                    listEventAdapter.submitList(events)
-                }
-            }
+        finishedViewModel = ViewModelProvider(this)[FinishedViewModel::class.java]
+
+        finishedAdapter = FinishedAdapter {
+            val intent = Intent(requireContext(), DetailEventActivity::class.java)
+            intent.putExtra("id", it.id)
+            startActivity(intent)
         }
 
-        mainViewModel.isLoading.observe(viewLifecycleOwner) {
+        binding.rvFinished.adapter
+        binding.rvFinished.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = finishedAdapter
+        }
+
+        finishedViewModel.listEvent.observe(viewLifecycleOwner) {
+            finishedAdapter.submitList(it)
+        }
+
+        finishedViewModel.getFinishedEvents()
+
+        finishedViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
         }
 
-        setupRecyclerView()
     }
 
     private fun showLoading(isLoading: Boolean){
@@ -50,15 +63,6 @@ class FinishedFragment : Fragment() {
             binding.progressBar.visibility = View.VISIBLE
         } else {
             binding.progressBar.visibility = View.GONE
-        }
-    }
-
-    private fun setupRecyclerView() {
-        binding.rvFinished.layoutManager = LinearLayoutManager(requireActivity())
-        listEventAdapter = ListEventAdapter()
-        binding.rvFinished.apply {
-            adapter = listEventAdapter
-            setHasFixedSize(true)
         }
     }
 
