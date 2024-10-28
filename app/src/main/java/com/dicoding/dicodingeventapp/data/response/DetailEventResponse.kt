@@ -7,13 +7,13 @@ import kotlinx.parcelize.Parcelize
 data class DetailEventResponse(
 
 	@field:SerializedName("error")
-	val error: Boolean? = null,
+	val error: Boolean,
 
 	@field:SerializedName("message")
-	val message: String? = null,
+	val message: String,
 
 	@field:SerializedName("event")
-	val event: Event? = null
+	val event: Event
 )
 
 @Parcelize

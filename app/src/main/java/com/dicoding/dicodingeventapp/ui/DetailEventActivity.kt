@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
 import androidx.core.view.ViewCompat
@@ -19,6 +20,8 @@ import com.dicoding.dicodingeventapp.databinding.ActivityDetailEventBinding
 class DetailEventActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityDetailEventBinding
+    private val mainViewModel by viewModels<MainViewModel>()
+
 
     companion object {
         const val KEY_EVENT = "key_event"
@@ -57,7 +60,7 @@ class DetailEventActivity : AppCompatActivity(), View.OnClickListener {
             HtmlCompat.FROM_HTML_MODE_LEGACY
         )
         Glide.with(this)
-            .load(event.imageLogo)
+            .load(event.mediaCover)
             .into(binding.ivDetailLogo)
     }
 

@@ -30,15 +30,11 @@ class UpcomingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mainViewModel.upcomingEvent.observe(viewLifecycleOwner) { eventResponse ->
-            eventResponse?.listEvents?.let { events ->
-                if (events.isNotEmpty()) {
-                    listEventAdapter.submitList(events)
-                }
-            }
+        mainViewModel.upcomingEvent.observe(viewLifecycleOwner) {
+            listEventAdapter.submitList(it)
         }
 
-        mainViewModel.isLoading.observe(viewLifecycleOwner) {
+        mainViewModel.isLoadingUpcoming.observe(viewLifecycleOwner) {
             showLoading(it)
         }
 

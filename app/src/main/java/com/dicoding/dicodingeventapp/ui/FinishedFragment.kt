@@ -30,15 +30,11 @@ class FinishedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mainViewModel.finishedEvent.observe(viewLifecycleOwner) { eventResponse ->
-            eventResponse?.listEvents?.let { events ->
-                if (events.isNotEmpty()) {
-                    listEventAdapter.submitList(events)
-                }
-            }
+        mainViewModel.finishedEvent.observe(viewLifecycleOwner) {
+            listEventAdapter.submitList(it)
         }
 
-        mainViewModel.isLoading.observe(viewLifecycleOwner) {
+        mainViewModel.isLoadingFinished.observe(viewLifecycleOwner) {
             showLoading(it)
         }
 

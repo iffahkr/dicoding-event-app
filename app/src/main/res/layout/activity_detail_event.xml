@@ -15,8 +15,7 @@
         <ImageView
             android:id="@+id/iv_detail_logo"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:scaleType="centerCrop"
+            android:layout_height="200dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -30,7 +29,7 @@
             android:id="@+id/tv_detail_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="46dp"
+            android:layout_marginTop="36dp"
             android:maxEms="15"
             android:text="@string/name"
             android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
@@ -116,7 +115,7 @@
         <Button
             android:id="@+id/btn_register"
             style="@style/Widget.Material3.Button"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginStart="16dp"
@@ -126,6 +125,19 @@
             app:layout_constraintEnd_toEndOf="@+id/tv_detail_description"
             app:layout_constraintStart_toStartOf="@+id/tv_detail_description"
             app:layout_constraintTop_toBottomOf="@id/tv_detail_description" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
