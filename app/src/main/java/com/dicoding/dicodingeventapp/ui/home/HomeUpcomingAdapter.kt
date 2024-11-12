@@ -1,29 +1,31 @@
 package com.dicoding.dicodingeventapp.ui.home
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.dicoding.dicodingeventapp.data.response.ListEventsItem
+import com.dicoding.dicodingeventapp.data.local.entity.FavoriteEvent
 import com.dicoding.dicodingeventapp.databinding.ItemHomeUpcomingBinding
+import com.dicoding.dicodingeventapp.ui.detail.DetailEventActivity
 
-class HomeUpcomingAdapter(private val onItemClick: (ListEventsItem) -> Unit) : ListAdapter<ListEventsItem, HomeUpcomingAdapter.ViewHolder>(DIFF_CALLBACK) {
+class HomeUpcomingAdapter(private val onItemClick: (FavoriteEvent) -> Unit) :
+    ListAdapter<FavoriteEvent, HomeUpcomingAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ListEventsItem>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<FavoriteEvent>() {
             override fun areItemsTheSame(
-                oldItem: ListEventsItem,
-                newItem: ListEventsItem
+                oldItem: FavoriteEvent,
+                newItem: FavoriteEvent
             ): Boolean {
-                return oldItem == newItem
+                return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
-                oldItem: ListEventsItem,
-                newItem: ListEventsItem
+                oldItem: FavoriteEvent,
+                newItem: FavoriteEvent
             ): Boolean {
                 return oldItem == newItem
             }
@@ -31,7 +33,7 @@ class HomeUpcomingAdapter(private val onItemClick: (ListEventsItem) -> Unit) : L
     }
 
     class ViewHolder(private val binding: ItemHomeUpcomingBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(event: ListEventsItem, onItemClick: (ListEventsItem) -> Unit) {
+        fun bind(event: FavoriteEvent, onItemClick: (FavoriteEvent) -> Unit) {
             binding.tvHomeNameUpcoming.text = event.name
             Glide.with(binding.ivHomeUpcoming.context)
                 .load(event.mediaCover)

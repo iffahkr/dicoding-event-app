@@ -7,23 +7,24 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.dicoding.dicodingeventapp.data.response.ListEventsItem
+import com.dicoding.dicodingeventapp.data.local.entity.FavoriteEvent
 import com.dicoding.dicodingeventapp.databinding.ItemEventBinding
+import com.dicoding.dicodingeventapp.ui.detail.DetailEventActivity
 
-class ListEventAdapter : ListAdapter<ListEventsItem, ListEventAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class ListEventAdapter : ListAdapter<FavoriteEvent, ListEventAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ListEventsItem>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<FavoriteEvent>() {
             override fun areItemsTheSame(
-                oldItem: ListEventsItem,
-                newItem: ListEventsItem
+                oldItem: FavoriteEvent,
+                newItem: FavoriteEvent
             ): Boolean {
-                return oldItem == newItem
+                return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
-                oldItem: ListEventsItem,
-                newItem: ListEventsItem
+                oldItem: FavoriteEvent,
+                newItem: FavoriteEvent
             ): Boolean {
                 return oldItem == newItem
             }
@@ -42,10 +43,13 @@ class ListEventAdapter : ListAdapter<ListEventsItem, ListEventAdapter.MyViewHold
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val event = getItem(position)
         holder.bind(event)
+        val favoriteEvent = getItem(position)
+        holder.bind(favoriteEvent)
+
     }
 
     class MyViewHolder(private val binding: ItemEventBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(event: ListEventsItem) {
+        fun bind(event: FavoriteEvent) {
             Glide.with(binding.ivEvent.context)
                 .load(event.mediaCover)
                 .into(binding.ivEvent)
